@@ -5,9 +5,9 @@
 ### Task 1: Project Setup
 
 - [X] Fork and clone the repository.
-- [ ] Implement your project in a `firstname-lastname` branch.
-- [ ] Create a pull request of `firstname-lastname` against your `main` branch.
-- [ ] Open the assignment in Canvas and submit your pull request.
+- [X] Implement your project in a `firstname-lastname` branch.
+- [X] Create a pull request of `firstname-lastname` against your `main` branch.
+- [X] Open the assignment in Canvas and submit your pull request.
 
 ### Task 2: Minimum Viable Product
 
@@ -54,21 +54,22 @@ The JSON representation above is the result of querying data from several tables
 
 Note that it's unlikely all the fields `{ "ingredient_id": 27, "ingredient_name": "olive oil", "quantity": 0.014 }` come from the same table. Otherwise an ingredient could only ever be used in a fixed quantity!
 
+[X]
 Before writing any code, write out all desired tables in the data model and determine the relationships between tables.
 
 **Try to keep your design to FOUR tables**. With three tables it will be hard to meet all requirements, and more than 5 is likely overkill.
 
 #### Project Scaffolding
-
+[ ]
 - Put an Express application together starting with the `package.json` and a `knexfile.js`. Use existing projects as reference if needed.
 
 #### Migrations and Seeds
-
+[ ]
 - Write a migration file that creates all tables necessary to model this data
 - Write seed files to populate the tables with test data. **Hint**: Keep your recipes simple or this step could become extremely time consuming.
 
 #### Data Access
-
+[ ]
 Write a data access file that exports an object with the following function:
 
 - `getRecipeById(recipe_id)`
@@ -77,7 +78,7 @@ Write a data access file that exports an object with the following function:
   - There are many ways to solve this, but from a performance standpoint the fewer trips to the database the better!
 
 #### Endpoint
-
+[ ]
 Write an endpoint to fetch a recipe by its id, using the `getRecipeById(recipe_id)` function.
 
 ### Task 3: Stretch Goals
