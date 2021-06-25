@@ -60,7 +60,7 @@ Before writing any code, write out all desired tables in the data model and dete
 **Try to keep your design to FOUR tables**. With three tables it will be hard to meet all requirements, and more than 5 is likely overkill.
 
 #### Project Scaffolding
-[ ]
+[X]
 - Put an Express application together starting with the `package.json` and a `knexfile.js`. Use existing projects as reference if needed.
 
 #### Migrations and Seeds

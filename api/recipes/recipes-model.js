@@ -1,95 +1,69 @@
-// const db = require('../../data/db-config');
+const db = require("../../data/db-config.js")
 
-// async function getRecipes() {
-//     let tags = await db('recipes')
-//         .where({ 'recipes.user_id': userId })
-//         .join('tags', 'tags.recipe_id', 'recipes.id')
-//         .select('tags.tag as tags', 'tags.recipe_id');
+function getByRecipeId(recipe_id) {
+    return db("recipes as r")
+        .select("r.*", "s.*", ".ingredient_quantity", "ifrs.*")
+        .where("r.recipe_id", recipe_id)
+        .leftJoin("steps as s", "r.recipe_id", "s.recipe_id")
+        .leftJoin("ingredients_for_recipe_steps as ifrs", "s.step_id", "ifrs.step_id")
+        .leftJoin("ingredients as i", "i.ingredient_id", "ifrs.ingredient_id")
+        .orderBy("s.step_number", "asc")
+        .then(data => {
+            if (!data || Object.keys(data).length === 0) {
+                return []
+            }
+            let arr = []
+            data.map(step => {
 
-//     let recipes = await db('recipes')
-//         .where({ 'recipes.user_id': userId })
-//         .select('recipes.*')
+                if (!step.recipe_id) {
+                    return arr
+                }
+                let exists = false
+                arr.map(steps => {
+                    if (steps.step_id == step.step_id) {
+                        exists = true
+                        if (step.ingredient_quantity) {
+                            let ingredient = {
+                                ingredient_id: step.ingredient_id,
+                                ingredient_name: step.ingredient_name,
+                                ingredient_quantity: step.ingredient_quantity
+                            }
+                            return steps.ingredients.push(ingredient)
+                        }
+                        else {
+                            return steps
+                        }
+                    }
+                    return steps
+                })
+                if (!exists) {
+                    let newStep = {
+                        step_id: step.step_id,
+                        step_number: step.step_number,
+                        step_instructions: step.step_instructions
+                    }
+                    if (step.quantity) {
+                        newStep.ingredients = []
+                        let ingredient = {
+                            ingredient_id: step.ingredient_id,
+                            ingredient_name: step.ingredient_name,
+                            ingredient_quantity: step.ingredient_quantity
+                        }
+                        newStep.ingredients.push(ingredient)
 
+                    } else {
+                        newStep.ingredients = []
+                    }
+                    arr.push(newStep)
+                }
+            })
+            let finalObject = {
+                recipe_id: data[0].recipe_id,
+                recipe_name: data[0].recipe_name,
+                steps: arr
+            }
+            return finalObject
+        })
+}
 
-//     await recipes.forEach(recipe => {
-//         recipe.tags = [];
-//         tags.forEach(tag => {
-//             if (recipe.id === tag.recipe_id) {
-//                 console.log(tag)
-//                 recipe.tags.push(tag.tags);
-//             } else {
-//                 return false;
-//             }
-//         });
-//     });
-
-//     return recipes;
-// };
-
-// function getAnimals() { // INCLUDING SPECIES NAME
-//     return db('animals as a')
-//         .leftJoin('species as s', 's.species_id', 'a.species_id')
-//         .select('a.animal_id', 'a.animal_name', 's.species_name');
-// }
-
-// async function createAnimal(animal) {
-//     const [animal_id] = await db('animals').insert(animal);
-//     return getAnimals().where({ animal_id }).first();
-// }
-
-// function deleteRecipes(species_id) {
-//     return db('species').where({ species_id }).del();
-// }
-
-
-
-// module.exports = {
-//     getRecipes,
-//     getRecipeById,
-//     addRecipe,
-//     deleteRecipe,
-//     updateRecipe
-// };
-
-
-
-// async function getRecipeById(recipeId, userId) {
-//     const recipe = await db('recipes')
-//         .where({ 'recipes.id': recipeId, 'recipes.user_id': userId })
-//         .first();
-
-//     if (recipe) {
-//         const ingredients = await db('ingredients')
-//             .join('recipes', 'recipes.id', 'ingredients.recipe_id')
-//             .select('ingredients.name')
-//             .where({ 'ingredients.recipe_id': recipeId })
-//             .map(ingredient => {
-//                 return ingredient.name;
-//             });
-
-//         const instructions = await db('instructions')
-//             .join('recipes', 'recipes.id', 'instructions.recipe_id')
-//             .select('instructions.name')
-//             .where({ 'instructions.recipe_id': recipeId })
-//             .map(instruction => {
-//                 return instruction.name;
-//             });
-
-//         const tags = await db('tags')
-//             .join('recipes', 'recipes.id', 'tags.recipe_id')
-//             .select('tags.tag')
-//             .where({ 'tags.recipe_id': recipeId })
-//             .map(tag => {
-//                 return tag.tag;
-//             });
-
-//         const result = { ...recipe, ingredients, instructions }
-//         return result;
-//     } else {
-//         return null;
-//     }
-// };
-
-
-
-
+module.exports = { getByRecipeId }

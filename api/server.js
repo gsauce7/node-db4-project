@@ -3,16 +3,14 @@ const server = express();
 // const cors = require('cors');
 // const helmet = require('helmet');
 
-// uncomment line 7
-//const recipesRouter = require('./recipes/recipes-router');
+const recipesRouter = require('./recipes/recipes-router');
 
 
 // server.use(helmet());
 // server.use(cors());
 server.use(express.json());
 
-// uncomment line 14
-//server.use('/api/recipes', recipesRouter);
+server.use('/api/recipes', recipesRouter);
 
 server.use((err, req, res, next) => { // eslint-disable-line
     res.status(500).json({

@@ -1,6 +1,9 @@
-exports.seed = function (knex, Promise) {
-    return knex('recipes').insert([
-        { recipe name: 'Wellington Surprise', address: "2920 Zoo Dr, San Diego, CA 92101" },
-        { recipe name: 'Granola', address: "Government Dr, St. Louis, MO 63110" }
-    ]);
-};
+exports.seed = function (knex) {
+    return knex('recipes').del()
+        .then(() => {
+            return knex('recipes').insert([
+                { recipe_name: "Espresso with Whipped Cream" },
+                { recipe_name: "Scrambled Eggs" }
+            ]);
+        });
+}
