@@ -1,8 +1,8 @@
 const db = require("../../data/db-config.js")
 
-function getByRecipeId(recipe_id) {
+function getRecipeById(recipe_id) {
     return db("recipes as r")
-        .select("r.*", "s.*", ".ingredient_quantity", "ifrs.*")
+        .select("r.*", "s.*", "ifrs.ingredient_quantity", "i.*")
         .where("r.recipe_id", recipe_id)
         .leftJoin("steps as s", "r.recipe_id", "s.recipe_id")
         .leftJoin("ingredients_for_recipe_steps as ifrs", "s.step_id", "ifrs.step_id")
@@ -57,13 +57,13 @@ function getByRecipeId(recipe_id) {
                     arr.push(newStep)
                 }
             })
-            let finalObject = {
+            let finalResult = {
                 recipe_id: data[0].recipe_id,
                 recipe_name: data[0].recipe_name,
                 steps: arr
             }
-            return finalObject
+            return finalResult
         })
 }
 
-module.exports = { getByRecipeId }
+module.exports = { getRecipeById }

@@ -64,12 +64,13 @@ Before writing any code, write out all desired tables in the data model and dete
 - Put an Express application together starting with the `package.json` and a `knexfile.js`. Use existing projects as reference if needed.
 
 #### Migrations and Seeds
-[ ]
+[X]
 - Write a migration file that creates all tables necessary to model this data
 - Write seed files to populate the tables with test data. **Hint**: Keep your recipes simple or this step could become extremely time consuming.
 
 #### Data Access
-[ ]
+[X] 
+*** this is the model ***
 Write a data access file that exports an object with the following function:
 
 - `getRecipeById(recipe_id)`
@@ -78,7 +79,7 @@ Write a data access file that exports an object with the following function:
   - There are many ways to solve this, but from a performance standpoint the fewer trips to the database the better!
 
 #### Endpoint
-[ ]
+[X]
 Write an endpoint to fetch a recipe by its id, using the `getRecipeById(recipe_id)` function.
 
 ### Task 3: Stretch Goals

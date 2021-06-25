@@ -1,10 +1,11 @@
 const express = require('express');
-const server = express();
+
 // const cors = require('cors');
 // const helmet = require('helmet');
 
 const recipesRouter = require('./recipes/recipes-router');
 
+const server = express();
 
 // server.use(helmet());
 // server.use(cors());

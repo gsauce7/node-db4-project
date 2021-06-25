@@ -29,7 +29,7 @@ exports.up = function (knex) {
         })
         .createTable('ingredients_for_recipe_steps', tbl => {
             tbl.increments('id');
-            tbl.text('amount')
+            tbl.text('ingredient_quantity')
                 .notNullable();
             tbl.integer('step_id')
                 .unsigned()
